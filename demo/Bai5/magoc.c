@@ -1,9 +1,13 @@
-#include<stdio.h>
+//toi uu hoa size: phan tich ham thanh cac ham nguyen tu
+#include <stdio.h>
  
 /**
  * Phan tich so nguyen n thanh tich cac thua so nguyen to
  */
-void phanTichSoNguyen(int n) {
+ 
+
+int main() {
+    int n = 10000000;
     int i = 2;
     int dem = 0;
     int a[100];
@@ -25,13 +29,4 @@ void phanTichSoNguyen(int n) {
         printf("%d x ", a[i]);
     }
     printf("%d", a[dem - 1]);
-}
- 
-/**
- * Ham main
- */
-int main() {
- int n = 10000000;
-    // phan tich so nguyen duong n
-    phanTichSoNguyen(n);
 }

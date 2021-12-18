@@ -17,8 +17,8 @@ int main (void)
   unsigned i;
   
   for (i = 1; i <= 100000000; i++)
-    {
-      sum += powern (i, i % 5);
+    { 
+      sum += powern (i, i % ((11397-1402)/1999));
     }
 
   printf ("sum = %g\n", sum);

@@ -15,13 +15,13 @@
 main:
 .LFB5:
 	.cfi_startproc
-	pushq	%rbp ; luu dia chi cua stack frame dung truoc. 
-;rbp tro den khung ngan xep, rsp tro den dinh ngan xep
+	pushq	%rbp # luu dia chi cua stack frame dung truoc. 
+#rbp tro den khung ngan xep, rsp tro den dinh ngan xep
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp ;dia chi stackframe hien tai
+	movq	%rsp, %rbp #dia chi stackframe hien tai
 	.cfi_def_cfa_register 6
-	subq	$32, %rsp ; luu tru 32byte cho bien cujc bo
+	subq	$32, %rsp # luu tru 32byte cho bien cujc bo
 	pxor	%xmm0, %xmm0
 	movss	%xmm0, -20(%rbp)
 	movl	$1000000, -8(%rbp)

@@ -1,4 +1,4 @@
-#ofast
+//ofast
 #include <stdio.h>
      
 const int DEC_10 = 10;

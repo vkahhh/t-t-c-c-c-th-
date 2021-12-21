@@ -51,7 +51,7 @@ main:
 	movss	-20(%rbp), %xmm1
 	addss	%xmm1, %xmm0
 	movss	%xmm0, -20(%rbp)
-	addl	$1, -12(%rbp) ;chuyen gt 1 vao [rbp -12]
+	addl	$1, -12(%rbp) #chuyen gt 1 vao [rbp -12]
 .L5:
 	movl	-12(%rbp), %eax
 	cmpl	-8(%rbp), %eax
@@ -67,7 +67,7 @@ main:
 	movss	%xmm0, -4(%rbp)
 	cvtss2sd	-4(%rbp), %xmm0
 	leaq	.LC4(%rip), %rdi
-	movl	$1, %eax ;5 byte
+	movl	$1, %eax #5 byte
 	call	printf@PLT
 	nop
 	leave

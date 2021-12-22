@@ -64,7 +64,7 @@ main:
 	movl	%ecx, %eax
 	subl	%edx, %eax
 	movl	-12(%rbp), %edx
-	cmp		$0, %rdx			#thay cho lenh test
+	testq	%rdx, %rdx		#3byte, thay cho lenh cmp
 	js	.L7
 	cvtsi2sdq	%rdx, %xmm0
 	jmp	.L8

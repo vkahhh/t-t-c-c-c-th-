@@ -27,7 +27,7 @@ KiemTraChanLe:
 	movl	%edi, -4(%rbp)
 	movl	-4(%rbp), %eax
 	andl	$1, %eax
-	testl	%eax, %eax
+	cmpl 	$0, %eax 
 	jne	.L2
 	leaq	.LC0(%rip), %rdi
 	call	puts@PLT
@@ -72,7 +72,7 @@ isPrimeNumber:
 	cltd
 	idivl	-8(%rbp)
 	movl	%edx, %eax
-	testl	%eax, %eax
+	cmpl	$0, %eax 
 	jne	.L9
 	movl	$0, %eax
 	jmp	.L7

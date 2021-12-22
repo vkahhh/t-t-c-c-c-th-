@@ -64,7 +64,8 @@ main:
 	movl	%ecx, %eax
 	subl	%edx, %eax
 	movl	-12(%rbp), %edx
-	testq	%rdx, %rdx
+	#testq	%rdx, %rdx
+	cmpq	$0, %rdx	
 	js	.L7
 	cvtsi2sdq	%rdx, %xmm0
 	jmp	.L8

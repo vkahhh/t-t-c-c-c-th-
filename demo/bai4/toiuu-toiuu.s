@@ -27,7 +27,7 @@ KiemTraChanLe:
 	movl	%edi, -4(%rbp)
 	movl	-4(%rbp), %eax
 	andl	$1, %eax
-	cmpl	$0, %eax
+	testl	%eax, %eax 
 	jne	.L2
 	leaq	.LC0(%rip), %rdi
 	call	puts@PLT

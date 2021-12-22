@@ -151,22 +151,23 @@ main:
 	movl	-12(%rbp), %edx
 	movl	%eax, %esi
 	leaq	.LC1(%rip), %rdi
-	movl	$0, %eax
+	xorl 	%eax, %eax
 	call	printf@PLT
 	movl	n(%rip), %eax
 	movq	-8(%rbp), %rdx
 	movl	%eax, %esi
 	leaq	.LC2(%rip), %rdi
-	movl	$0, %eax
+	xorl 	%eax, %eax
 	call	printf@PLT
 	movl	-28(%rbp), %edx
 	movl	-24(%rbp), %eax
 	movl	%eax, %esi
 	leaq	.LC3(%rip), %rdi
-	movl	$0, %eax
+	xorl 	%eax, %eax
 	call	printf@PLT
-	movl	$0, %eax
-	leave
+	xorl 	%eax, %eax 	#movl	$0, %eax
+	movq   %rbp, %rsp    #leave
+	popq   %rbp 		#leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

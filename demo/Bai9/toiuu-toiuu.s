@@ -118,21 +118,23 @@ main:
 	ucomiss	-4(%rbp), %xmm0
 	jne	.L10
 	leaq	.LC2(%rip), %rdi
-	movl	$0, %eax
+	xorl 	%eax, %eax 
 	call	printf@PLT
 	jmp	.L12
 .L10:
 	cvtss2sd	-4(%rbp), %xmm0
 	leaq	.LC3(%rip), %rdi
-	movl	$1, %eax
+	xorl	%eax, %eax 
+	inc 	%eax
 	call	printf@PLT
 .L12:
 	addl	$1, -20(%rbp)
 .L9:
 	cmpl	$4999, -20(%rbp)
 	jle	.L13
-	movl	$0, %eax
-	leave
+	xorl 	%eax, %eax 
+	movq   %rbp, %rsp    #leave
+	popq   %rbp 		#leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

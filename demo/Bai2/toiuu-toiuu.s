@@ -55,7 +55,7 @@ main:
 	cmpl	-4(%rbp), %eax
 	jl	.L5
 	movl	$0, %eax
-	lmovq   %rbp, %rsp
+	movq   %rbp, %rsp
 	popq   %rbp
 
 	.cfi_def_cfa 7, 8

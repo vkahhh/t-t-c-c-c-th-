@@ -25,20 +25,17 @@ main:
 	movl	$0, -420(%rbp)
 	jmp	.L2
 .L4:
-	#movl	-428(%rbp), %eax
-	leal	-428(%rbp), %rax
+	movl	-428(%rbp), %eax
 	cltd
 	idivl	-424(%rbp)
 	movl	%edx, %eax
 	testl	%eax, %eax
 	jne	.L3
-	#movl	-428(%rbp), %eax
-	leal	-428(%rbp), %rax
+	movl	-428(%rbp), %eax
 	cltd
 	idivl	-424(%rbp)
 	movl	%eax, -428(%rbp)
-	#movl	-420(%rbp), %eax
-	leal	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	leal	1(%rax), %edx
 	movl	%edx, -420(%rbp)
 	cltq
@@ -52,8 +49,7 @@ main:
 	jg	.L4
 	cmpl	$0, -420(%rbp)
 	jne	.L5
-	#movl	-420(%rbp), %eax
-	leal	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	leal	1(%rax), %edx
 	movl	%edx, -420(%rbp)
 	cltq
@@ -63,39 +59,35 @@ main:
 	movl	$0, -424(%rbp)
 	jmp	.L6
 .L7:
-	#movl	-424(%rbp), %eax
-	leal	-424(%rbp), %rax
+	movl	-424(%rbp), %eax
 	cltq
 	movl	-416(%rbp,%rax,4), %eax
 	movl	%eax, %esi
 	leaq	.LC0(%rip), %rdi
-	xorl    %eax, %eax 
+	movl	$0, %eax
 	call	printf@PLT
 	addl	$1, -424(%rbp)
 .L6:
-	#movl	-420(%rbp), %eax
-	leal	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	subl	$1, %eax
 	cmpl	%eax, -424(%rbp)
 	jl	.L7
-	#movl	-420(%rbp), %eax
-	leal	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	subl	$1, %eax
 	cltq
 	movl	-416(%rbp,%rax,4), %eax
 	movl	%eax, %esi
 	leaq	.LC1(%rip), %rdi
-	xorl    %eax, %eax 
+	xorl 	%eax, %eax
 	call	printf@PLT
-	xorl    %eax, %eax 
+	xorl 	%eax, %eax
 	movq	-8(%rbp), %rcx
 	xorq	%fs:40, %rcx
 	je	.L9
 	call	__stack_chk_fail@PLT
 .L9:
-	movq   %rbp, %rsp  
-	popq   %rbp 
-
+	movq   %rbp, %rsp    #leave
+	popq   %rbp 		#leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

@@ -15,57 +15,57 @@
 main:
 .LFB5:
 	.cfi_startproc
-	pushq	%rbx
+	pushq	%rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbx
+	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 	subq	$32, %rsp
 	xorps   %xmm0, %xmm0 
-	movss	%xmm0, -20(%rbx)
-	movl	$1000000, -8(%rbx)
+	movss	%xmm0, -20(%rbp)
+	movl	$1000000, -8(%rbp)
 	leaq	.LC1(%rip), %rdi
 	call	puts@PLT
-	movl	$0, -16(%rbx)
+	movl	$0, -16(%rbp)
 	jmp	.L2
 .L4:
-	movl	-16(%rbx), %eax
+	movl	-16(%rbp), %eax
 	andl	$1, %eax
 	testl	%eax, %eax
 	jne	.L3
-	movl	-16(%rbx), %eax
+	movl	-16(%rbp), %eax
 	movl	%eax, %esi
 	leaq	.LC2(%rip), %rdi
 	movl	$0, %eax
 	call	printf@PLT
 .L3:
-	addl	$1, -16(%rbx)
+	addl	$1, -16(%rbp)
 .L2:
-	movl	-16(%rbx), %eax
-	cmpl	-8(%rbx), %eax
+	movl	-16(%rbp), %eax
+	cmpl	-8(%rbp), %eax
 	jle	.L4
-	movl	$0, -12(%rbx)
+	movl	$0, -12(%rbp)
 	jmp	.L5
 .L6:
-	cvtsi2ss	-12(%rbx), %xmm0
-	movss	-20(%rbx), %xmm1
+	cvtsi2ss	-12(%rbp), %xmm0
+	movss	-20(%rbp), %xmm1
 	addss	%xmm1, %xmm0
-	movss	%xmm0, -20(%rbx)
-	addl	$1, -12(%rbx)
+	movss	%xmm0, -20(%rbp)
+	addl	$1, -12(%rbp)
 .L5:
-	movl	-12(%rbx), %eax
-	cmpl	-8(%rbx), %eax
+	movl	-12(%rbp), %eax
+	cmpl	-8(%rbp), %eax
 	jle	.L6
-	cvtss2sd	-20(%rbx), %xmm0
+	cvtss2sd	-20(%rbp), %xmm0
 	leaq	.LC3(%rip), %rdi
 	movl	$1, %eax
 	call	printf@PLT
-	cvtsi2ss	-8(%rbx), %xmm0
-	movss	-20(%rbx), %xmm1
+	cvtsi2ss	-8(%rbp), %xmm0
+	movss	-20(%rbp), %xmm1
 	divss	%xmm0, %xmm1
 	movaps	%xmm1, %xmm0
-	movss	%xmm0, -4(%rbx)
-	cvtss2sd	-4(%rbx), %xmm0
+	movss	%xmm0, -4(%rbp)
+	cvtss2sd	-4(%rbp), %xmm0
 	leaq	.LC4(%rip), %rdi
 	xorl    %eax, %eax 
 	inc %eax

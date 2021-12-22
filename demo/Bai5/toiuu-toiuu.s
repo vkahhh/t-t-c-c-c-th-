@@ -25,21 +25,17 @@ phanTichSoNguyen:
 	movl	$0, -420(%rbp)
 	jmp	.L2
 .L4:
-	#movl	-436(%rbp), %eax
-	leal 	-436(%rbp), %rax
+	movl	-436(%rbp), %eax
 	cltd
 	idivl	-424(%rbp)
 	movl	%edx, %eax
-	#testl	%eax, %eax
-	cmp	$0,   %eax
+	testl	%eax, %eax
 	jne	.L3
-	#movl	-436(%rbp), %eax
-	leal 	-436(%rbp), %rax
+	movl	-436(%rbp), %eax
 	cltd
 	idivl	-424(%rbp)
 	movl	%eax, -436(%rbp)
-	#movl	-420(%rbp), %eax
-	leal 	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	leal	1(%rax), %edx
 	movl	%edx, -420(%rbp)
 	cltq
@@ -53,35 +49,30 @@ phanTichSoNguyen:
 	jg	.L4
 	cmpl	$0, -420(%rbp)
 	jne	.L5
-	#movl	-420(%rbp), %eax
-	leal 	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	leal	1(%rax), %edx
 	movl	%edx, -420(%rbp)
 	cltq
-	#movl	-436(%rbp), %edx
-	leal 	-436(%rbp), %rax
+	movl	-436(%rbp), %edx
 	movl	%edx, -416(%rbp,%rax,4)
 .L5:
 	movl	$0, -424(%rbp)
 	jmp	.L6
 .L7:
-	#movl	-424(%rbp), %eax
-	leal 	-424(%rbp), %rax
+	movl	-424(%rbp), %eax
 	cltq
 	movl	-416(%rbp,%rax,4), %eax
 	movl	%eax, %esi
 	leaq	.LC0(%rip), %rdi
-	movl	$0, %eax
+	xorl 	%eax, %eax 
 	call	printf@PLT
 	addl	$1, -424(%rbp)
 .L6:
-	#movl	-420(%rbp), %eax
-	leal 	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	subl	$1, %eax
 	cmpl	%eax, -424(%rbp)
 	jl	.L7
-	#movl	-420(%rbp), %eax
-	leal 	-420(%rbp), %rax
+	movl	-420(%rbp), %eax
 	subl	$1, %eax
 	cltq
 	movl	-416(%rbp,%rax,4), %eax
@@ -113,12 +104,12 @@ main:
 	.cfi_def_cfa_register 6
 	subq	$16, %rsp
 	movl	$10000000, -4(%rbp)
-	#movl	-4(%rbp), %eax
-	leal 	-4(%rbp), %rax
+	movl	-4(%rbp), %eax
 	movl	%eax, %edi
 	call	phanTichSoNguyen
-	movl	$0, %eax
-	leave
+	xorl 	%eax, %eax 	#movl	$0, %eax
+	movq   %rbp, %rsp    #leave
+	popq   %rbp 		#leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

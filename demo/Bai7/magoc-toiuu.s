@@ -94,8 +94,9 @@ main:
 	xorl	%eax, %eax 
 	inc 	%eax 
 	call	printf@PLT
-	movl	$0, %eax
-	leave
+	xorl 	%eax, %eax 	#movl	$0, %eax
+	movq   %rbp, %rsp    #leave
+	popq   %rbp 		#leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

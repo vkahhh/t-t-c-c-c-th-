@@ -114,6 +114,8 @@ shakersort:
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC2:
 	.string	"%d "
+.LC4:
+	.string	"\ntime: %f"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4,,15
 	.globl	main
@@ -121,30 +123,35 @@ shakersort:
 main:
 .LFB25:
 	.cfi_startproc
-	pushq	%r12
+	pushq	%r13
 	.cfi_def_cfa_offset 16
-	.cfi_offset 12, -16
-	pushq	%rbp
+	.cfi_offset 13, -16
+	pushq	%r12
 	.cfi_def_cfa_offset 24
-	.cfi_offset 6, -24
-	leaq	.LC2(%rip), %rbp
-	pushq	%rbx
+	.cfi_offset 12, -24
+	pushq	%rbp
 	.cfi_def_cfa_offset 32
-	.cfi_offset 3, -32
-	movl	$10, %esi
-	subq	$48, %rsp
-	.cfi_def_cfa_offset 80
-	movdqa	.LC0(%rip), %xmm0
-	movq	%rsp, %rbx
-	leaq	40(%rbx), %r12
-	movq	%rbx, %rdi
-	movl	$3, 32(%rsp)
-	movaps	%xmm0, (%rsp)
+	.cfi_offset 6, -32
+	pushq	%rbx
+	.cfi_def_cfa_offset 40
+	.cfi_offset 3, -40
+	leaq	.LC2(%rip), %rbp
+	subq	$56, %rsp
+	.cfi_def_cfa_offset 96
 	movq	%fs:40, %rax
 	movq	%rax, 40(%rsp)
 	xorl	%eax, %eax
-	movdqa	.LC1(%rip), %xmm0
+	call	clock@PLT
+	movdqa	.LC0(%rip), %xmm0
+	movq	%rsp, %rbx
+	leaq	40(%rbx), %r12
+	movl	$10, %esi
+	movq	%rbx, %rdi
+	movaps	%xmm0, (%rsp)
+	movq	%rax, %r13
+	movl	$3, 32(%rsp)
 	movl	$44, 36(%rsp)
+	movdqa	.LC1(%rip), %xmm0
 	movaps	%xmm0, 16(%rsp)
 	call	shakersort
 	.p2align 4,,10
@@ -158,18 +165,29 @@ main:
 	call	__printf_chk@PLT
 	cmpq	%rbx, %r12
 	jne	.L20
+	call	clock@PLT
+	pxor	%xmm0, %xmm0
+	subq	%r13, %rax
+	leaq	.LC4(%rip), %rsi
+	movl	$1, %edi
+	cvtsi2sdq	%rax, %xmm0
+	movl	$1, %eax
+	divsd	.LC3(%rip), %xmm0
+	call	__printf_chk@PLT
 	xorl	%eax, %eax
 	movq	40(%rsp), %rcx
 	xorq	%fs:40, %rcx
 	jne	.L24
-	addq	$48, %rsp
+	addq	$56, %rsp
 	.cfi_remember_state
-	.cfi_def_cfa_offset 32
+	.cfi_def_cfa_offset 40
 	popq	%rbx
-	.cfi_def_cfa_offset 24
+	.cfi_def_cfa_offset 32
 	popq	%rbp
-	.cfi_def_cfa_offset 16
+	.cfi_def_cfa_offset 24
 	popq	%r12
+	.cfi_def_cfa_offset 16
+	popq	%r13
 	.cfi_def_cfa_offset 8
 	ret
 .L24:
@@ -191,5 +209,10 @@ main:
 	.long	57
 	.long	94
 	.long	63
+	.section	.rodata.cst8,"aM",@progbits,8
+	.align 8
+.LC3:
+	.long	0
+	.long	1093567616
 	.ident	"GCC: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
 	.section	.note.GNU-stack,"",@progbits

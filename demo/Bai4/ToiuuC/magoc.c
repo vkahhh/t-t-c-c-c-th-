@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <math.h>
 long n = 100000;
 
 int isPrimeNumber(long n) {

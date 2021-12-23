@@ -146,6 +146,8 @@ shakersort:
 	.section	.rodata
 .LC0:
 	.string	"%d "
+.LC2:
+	.string	"\ntime: %f"
 	.text
 	.globl	main
 	.type	main, @function
@@ -157,10 +159,12 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$64, %rsp
+	subq	$96, %rsp
 	movq	%fs:40, %rax
 	movq	%rax, -8(%rbp)
 	xorl	%eax, %eax
+	call	clock@PLT
+	movq	%rax, -72(%rbp)
 	movl	$43, -48(%rbp)
 	movl	$432, -44(%rbp)
 	movl	$36, -40(%rbp)
@@ -175,20 +179,34 @@ main:
 	movl	$10, %esi
 	movq	%rax, %rdi
 	call	shakersort
-	movl	$0, -52(%rbp)
+	movl	$0, -76(%rbp)
 	jmp	.L12
 .L13:
-	movl	-52(%rbp), %eax
+	movl	-76(%rbp), %eax
 	cltq
 	movl	-48(%rbp,%rax,4), %eax
 	movl	%eax, %esi
 	leaq	.LC0(%rip), %rdi
 	movl	$0, %eax
 	call	printf@PLT
-	addl	$1, -52(%rbp)
+	addl	$1, -76(%rbp)
 .L12:
-	cmpl	$9, -52(%rbp)
+	cmpl	$9, -76(%rbp)
 	jle	.L13
+	call	clock@PLT
+	movq	%rax, -64(%rbp)
+	movq	-64(%rbp), %rax
+	subq	-72(%rbp), %rax
+	cvtsi2sdq	%rax, %xmm0
+	movsd	.LC1(%rip), %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	%xmm0, -56(%rbp)
+	movq	-56(%rbp), %rax
+	movq	%rax, -88(%rbp)
+	movsd	-88(%rbp), %xmm0
+	leaq	.LC2(%rip), %rdi
+	movl	$1, %eax
+	call	printf@PLT
 	movl	$0, %eax
 	movq	-8(%rbp), %rdx
 	xorq	%fs:40, %rdx
@@ -201,5 +219,10 @@ main:
 	.cfi_endproc
 .LFE2:
 	.size	main, .-main
+	.section	.rodata
+	.align 8
+.LC1:
+	.long	0
+	.long	1093567616
 	.ident	"GCC: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
 	.section	.note.GNU-stack,"",@progbits

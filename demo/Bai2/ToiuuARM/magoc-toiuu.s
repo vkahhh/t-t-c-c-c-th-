@@ -44,21 +44,19 @@ main:
 	bl	clock(PLT)
 	str	r0, [r7, #4]
 	mov	r3, #1000
-	
 	str	r3, [r7, #8]
 	ldr	r3, .L9+8
 .LPIC0:
 	add	r3, pc
 	mov	r0, r3
 	bl	puts(PLT)
-	;movs	r3, #0
-	ands	r3, r3
+	movs	r3, #0
 	str	r3, [r7]
 	b	.L2
 .L4:
 	ldr	r3, [r7]
 	and	r3, r3, #1
-	tst	r3, r3
+	cmp	r3, #0
 	bne	.L3
 	ldr	r1, [r7]
 	ldr	r3, .L9+12
@@ -80,13 +78,13 @@ main:
 	add	r3, pc
 	mov	r0, r3
 	bl	puts(PLT)
-	ands	r3, #0
+	movs	r3, #0
 	str	r3, [r7]
 	b	.L5
 .L7:
 	ldr	r3, [r7]
 	and	r3, r3, #1
-	tst	r3, r3
+	cmp	r3, #0
 	beq	.L6
 	ldr	r1, [r7]
 	ldr	r3, .L9+20
@@ -119,7 +117,7 @@ main:
 	add	r1, pc
 	mov	r0, r1
 	bl	printf(PLT)
-	ands	r3, #0
+	movs	r3, #0
 	mov	r0, r3
 	adds	r7, r7, #24
 	mov	sp, r7

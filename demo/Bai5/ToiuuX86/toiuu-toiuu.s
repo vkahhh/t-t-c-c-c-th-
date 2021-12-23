@@ -64,7 +64,7 @@ phanTichSoNguyen:
 	movl	-416(%rbp,%rax,4), %eax
 	movl	%eax, %esi
 	leaq	.LC0(%rip), %rdi
-	xorl 	%eax, %eax 
+	xorl	%eax, %eax
 	call	printf@PLT
 	addl	$1, -424(%rbp)
 .L6:
@@ -78,7 +78,7 @@ phanTichSoNguyen:
 	movl	-416(%rbp,%rax,4), %eax
 	movl	%eax, %esi
 	leaq	.LC1(%rip), %rdi
-	movl	$0, %eax
+	xorl	%eax, %eax
 	call	printf@PLT
 	nop
 	movq	-8(%rbp), %rax
@@ -86,12 +86,17 @@ phanTichSoNguyen:
 	je	.L8
 	call	__stack_chk_fail@PLT
 .L8:
-	leave
+	movq   %rbp, %rsp    #leave
+	popq   %rbp 		#leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
 .LFE0:
 	.size	phanTichSoNguyen, .-phanTichSoNguyen
+	.section	.rodata
+.LC3:
+	.string	"\ntime: %f"
+	.text
 	.globl	main
 	.type	main, @function
 main:
@@ -102,18 +107,38 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$16, %rsp
-	movl	$10000000, -4(%rbp)
-	movl	-4(%rbp), %eax
+	subq	$48, %rsp
+	call	clock@PLT
+	movq	%rax, -24(%rbp)
+	movl	$10000000, -28(%rbp)
+	movl	-28(%rbp), %eax
 	movl	%eax, %edi
 	call	phanTichSoNguyen
-	xorl 	%eax, %eax 	#movl	$0, %eax
-	movq   %rbp, %rsp    #leave
-	popq   %rbp 		#leave
+	call	clock@PLT
+	movq	%rax, -16(%rbp)
+	movq	-16(%rbp), %rax
+	subq	-24(%rbp), %rax
+	cvtsi2sdq	%rax, %xmm0
+	movsd	.LC2(%rip), %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	%xmm0, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	%rax, -40(%rbp)
+	movsd	-40(%rbp), %xmm0
+	leaq	.LC3(%rip), %rdi
+	movl	$1, %eax
+	call	printf@PLT
+	xorl	%eax, %eax
+	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
 .LFE1:
 	.size	main, .-main
+	.section	.rodata
+	.align 8
+.LC2:
+	.long	0
+	.long	1093567616
 	.ident	"GCC: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
 	.section	.note.GNU-stack,"",@progbits

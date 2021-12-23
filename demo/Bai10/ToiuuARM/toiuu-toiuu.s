@@ -40,15 +40,16 @@ shakersort:
 	@ frame_needed = 0, uses_anonymous_args = 0
 	add	ip, r1, r1, lsr #31
 	asr	ip, ip, #1
-	tst	ip, ip
+	cmp	ip, #0
 	ble	.L16
 	push	{r4, r5, r6, r7, lr}
 	add	r7, r1, #1073741824
 	subs	r7, r7, #2
 	add	ip, ip, #1
 	add	lr, r1, #-1
+	#movs	r5, #1
 	ands	r5, #0
-	adds	r5, #1
+	adds 	r5, #1
 	add	r7, r0, r7, lsl #2
 .L11:
 	subs	r3, r1, r5
@@ -126,15 +127,15 @@ main:
 	stmia	r5!, {r0, r1, r2, r3}
 	ldm	r6, {r0, r1}
 	stm	r5, {r0, r1}
+	movs	r1, #10
 	ands	r1, #0
-	adds	r1, #10
+	adds 	r1, #10
 	add	r0, sp, #4
 	bl	shakersort(PLT)
 .L20:
 	ldr	r2, [r4, #4]!
 	mov	r1, r7
-	ands	r1, #0
-	adds	r1, #1
+	movs	r0, #1
 	bl	__printf_chk(PLT)
 	cmp	r4, r8
 	bne	.L20
@@ -144,8 +145,7 @@ main:
 .LPIC11:
 	add	r1, pc
 	sub	r9, r0, r9
-	ands	r0, #0
-	adds	r0, #1
+	ands	r0, #1
 	vmov	s15, r9	@ int
 	vcvt.f64.s32	d7, s15
 	vmul.f64	d7, d7, d6
@@ -153,7 +153,7 @@ main:
 	bl	__printf_chk(PLT)
 	ldr	r2, [sp, #44]
 	ldr	r3, [r10]
-	movs	r0, #0
+	ands	r0, #0
 	cmp	r2, r3
 	bne	.L24
 	add	sp, sp, #48

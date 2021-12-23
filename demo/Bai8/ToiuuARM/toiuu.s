@@ -34,9 +34,10 @@ tong:
 	sub	sp, sp, #20
 	add	r7, sp, #0
 	str	r0, [r7, #4]
-	movs	r3, #0
+	ands	r3, #0
 	str	r3, [r7, #8]
-	movs	r3, #1
+	ands	r3, #0
+	adds	r3, #1
 	str	r3, [r7, #12]
 	b	.L2
 .L3:
@@ -75,13 +76,15 @@ tongGiaiThua:
 	sub	sp, sp, #32
 	add	r7, sp, #0
 	str	r0, [r7, #4]
-	mov	r3, #0
-	mov	r4, #0
+	and	r3, #0
+	and	r4, #0
 	strd	r3, [r7, #16]
-	mov	r3, #1
-	mov	r4, #0
+	and	r3, #0
+	add	r3, #1
+	and	r4, #0
 	strd	r3, [r7, #24]
-	movs	r3, #1
+	ands	r3, #0
+	adds	r3, #1
 	str	r3, [r7, #12]
 	b	.L6
 .L7:

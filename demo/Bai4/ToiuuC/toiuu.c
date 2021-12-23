@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <math.h>
 int n = 100000;
 void KiemTraChanLe (int n) {
      if (n % 2 == 0) printf ("n la so chan\n");
